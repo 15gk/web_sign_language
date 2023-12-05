@@ -4,7 +4,7 @@ from mediapipe.tasks import python
 import threading 
 import streamlit as st
 
-# from streamlit.scriptrunner.script_run_context import get_script_run_ct
+st.set_page_config(page_title="Sign language", page_icon="OK")
 
 class GestureRecognizer:
     def __init__(self):
@@ -27,10 +27,10 @@ class GestureRecognizer:
         self.mp_drawing = mp.solutions.drawing_utils
         self.mp_hands = mp.solutions.hands
         self.hands = self.mp_hands.Hands(
-                static_image_mode=False,
-                max_num_hands=self.num_hands,
-                min_detection_confidence=0.65,
-                min_tracking_confidence=0.65)
+            static_image_mode=False,
+            max_num_hands=self.num_hands,
+            min_detection_confidence=0.65,
+            min_tracking_confidence=0.65)
 
     def main(self):
         st.title("Gesture Recognition with OpenCV And mediapipe")
@@ -60,6 +60,7 @@ class GestureRecognizer:
                 #  self.put_gestures(frame)
 
             video_placeholder.image(frame, channels="BGR", use_column_width=True)
+            
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
@@ -84,12 +85,10 @@ class GestureRecognizer:
             latest_gesture = gestures[-1]
             st.text(latest_gesture)
 
-        
         # if gestures:
         #     latest_gesture = gestures[-1]
         #     gesture_container.text(latest_gesture)
        
-
     def __result_callback(self, result, output_image, timestamp_ms):
         self.lock.acquire()  # solves potential concurrency issues
         self.current_gestures = []
