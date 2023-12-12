@@ -1,13 +1,67 @@
 import streamlit as st
 
+def navbar():
+    st.markdown("""
+    <style>
+        nav {
+            background-color: #c88ea7;
+            color: #000;
+            padding: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+        }
+
+        li {
+            margin-right: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #2f2e41;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #000;
+        }
+
+        .login-link {
+            margin-right: 0;
+            display: flex;
+            justify-content: flex-end;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <nav>
+        <ul>
+            <li><a href="/">Gesture Sync</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/Contact">Contact</a></li>
+            <li><a href="/webcam">Webcam</a></li>
+            <li class="login-link"><a href="/login">Login</a></li>
+        </ul>
+    </nav>
+    """, unsafe_allow_html=True)
+
 def contact_form():
-    st.title('Contact Us')
+   
+
+    navbar()  # Include the navbar
+
     st.markdown("""
     <style>
         .contact-container {
             text-align: center;
             max-width: 600px;
             margin: 50px auto;
+                background-color: #000000;
         }
         .contactimg {
             max-width: 600px;
@@ -44,7 +98,7 @@ def contact_form():
     """, unsafe_allow_html=True)
     
     st.markdown("<div class='contact-container'>", unsafe_allow_html=True)
-    st.image("./Image/contact.png",width=400, use_column_width=True)
+    st.image("./Image/contact.png", width=400, use_column_width=True)
     st.markdown("""
         <form>
             <label for="message">Message:</label>
