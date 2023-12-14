@@ -98,7 +98,7 @@ def contact_form():
     """, unsafe_allow_html=True)
     
     st.markdown("<div class='contact-container'>", unsafe_allow_html=True)
-    st.image("./Image/contact.png", width=400, use_column_width=True)
+    
     st.markdown("""
         <form>
             <label for="message">Message:</label>

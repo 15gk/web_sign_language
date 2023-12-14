@@ -92,10 +92,7 @@ def landing_page():
         </style>
     """, unsafe_allow_html=True)
 
-    # Display the image with specified dimensions
-    st.image("./Image/undraw_love_it_0v4l.png", width=400)
 
-    
 
 if __name__ == "__main__":
     landing_page()
