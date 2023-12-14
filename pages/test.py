@@ -3,6 +3,7 @@ import mediapipe as mp
 from mediapipe.tasks import python
 import threading 
 import streamlit as st
+import time
 
 st.set_page_config(page_title="Sign language", page_icon="OK")
 
@@ -35,7 +36,7 @@ class GestureRecognizer:
     def main(self):
         st.title("Gesture Recognition with OpenCV And mediapipe")
         video_placeholder = st.empty()
-        gesture_container = st.empty()
+        
 
         cap = cv2.VideoCapture(0)
 
@@ -57,12 +58,15 @@ class GestureRecognizer:
                     self.recognizer.recognize_async(mp_image, self.timestamp)
                     self.timestamp += 1  # should be monotonically increasing, because in LIVE_STREAM mode
                     self.put_gestures(frame)
+                    # latest_gesture1=self.put_gestures(frame)
+                    
                 #  self.put_gestures(frame)
-
+            # gesture_container.text(latest_gesture1)
             video_placeholder.image(frame, channels="BGR", use_column_width=True)
             
+            
             if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+                 break
 
         cap.release()
 
@@ -75,6 +79,7 @@ class GestureRecognizer:
     #         st.text(hand_gesture_name)
     #         y_pos += 50
     def put_gestures(self, frame):
+        gesture_container = st.empty()
         self.lock.acquire()
         gestures = self.current_gestures
         self.lock.release()
@@ -83,7 +88,12 @@ class GestureRecognizer:
         # Display only the latest gesture
         if gestures:
             latest_gesture = gestures[-1]
-            st.text(latest_gesture)
+            
+            with gesture_container.container():
+                st.text(latest_gesture)
+                time.sleep(0.12)
+            gesture_container.empty()
+            # st.text(latest_gesture)
 
         # if gestures:
         #     latest_gesture = gestures[-1]
@@ -96,7 +106,6 @@ class GestureRecognizer:
             st.write("Recognized gestures:")
             for single_hand_gesture_data in result.gestures:
                 gesture_name = single_hand_gesture_data[0].category_name
-                st.text(gesture_name)
                 self.current_gestures.append(gesture_name)
         self.lock.release()
 
